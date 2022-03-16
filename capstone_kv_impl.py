@@ -3,9 +3,11 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import db
 
+global current_user
+current_user = object()
+global kivy_app
+kivy_app = object()
 
-current_user = None
-kivy_app = None
 
 class UserData:
     def __init__(self,un =""):
@@ -31,15 +33,13 @@ class SplashWindow(Screen):
 
     pass
 
-
 class LoginWindow(Screen):#
     def login_released(self,usnm, passw):
         print(f"user name = {usnm.text}")
         print(f"password = {passw.text}")
         result = db.un_login(usnm.text,passw.text)
         if result == True:
-
-
+            global current_user
             current_user = UserData(usnm.text)
             # clear text fields
             usnm.text =""
@@ -57,20 +57,24 @@ class LoginWindow(Screen):#
     pass
 
 class ProfileWindow(Screen):
-    def display_userdata(self,*args):
+    def display_userdata(self,usnm,first_name,last_name,email,interests):
         user_profiles = db.profile_get(current_user.UserName)
-        assert len(user_profiles)
+        assert len(user_profiles) > 0
 
         user_data = user_profiles[0]
         current_user.update(user_data)
-        for i in range (len(args)):
-            args[i].text = user_data[i + 1]
-            pass
+
+        usnm.text = current_user.UserName
+        first_name.text = current_user.FirstName
+        last_name.text = current_user.LastName
+        email.text = current_user.Email
+        interests.text = current_user.Interests
+
+
 
 
         pass
     pass
-
 
 class ProfileCreateWindow(Screen):
     def create_profile_released(self,usnm,passw,first_name,last_name,email,interests):
@@ -87,8 +91,6 @@ class ProfileCreateWindow(Screen):
 
 
     pass
-
-
 
 class WindowManager(ScreenManager):
 
@@ -112,7 +114,6 @@ class WindowManager(ScreenManager):
 
 
     pass
-
 
 
 current_user = UserData()
@@ -154,8 +155,11 @@ def main():
     # db.profile_print(all = True)
     # db.profile_print(['Python733t'])
     # db.profile_print('Python733t')
+    pass
 
-kivy_app = MyMainApp()
+
 if __name__ == "__main__":
+    kivy_app = MyMainApp()
+
     main()
     kivy_app.run()
