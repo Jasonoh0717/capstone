@@ -1,26 +1,16 @@
 #:kivy 2.0
+#:import Clock kivy.clock.Clock
 WindowManager:
-    SplashWindow:
     LoginWindow:
+    LoginNoUsernameWindow:
+    LoginEmailUsernameWindow:
+    LoginEmailUsernameConfirmationWindow:
+    LoginWrongPasswordWindow:
+    LoginResetPasswordWindow:
     ProfileWindow:
     ProfileCreateWindow:
 
-<SplashWindow>:
-    name: "splash"
-    GridLayout:
-        cols:1
 
-        Button:
-            text: "Login"
-            on_release:
-                app.root.current = "login"
-                root.manager.transition.direction = "left"
-    
-        Button:
-            text: "Create Profile"
-            on_release:
-                app.root.current = "profile_create"
-                root.manager.transition.direction = "left"
 
 <LoginWindow>:
     name: "login"
@@ -50,7 +40,7 @@ WindowManager:
                 password: True
 
         Button:
-            text: "Submit"
+            text: "Login"
             on_release:
                 root.login_released(usnm, passw)
 
@@ -61,11 +51,113 @@ WindowManager:
                 root.manager.clear_released(usnm,passw)
 
 
+        Button:
+            text: "Create Profile"
+            on_release:
+                app.root.current = "profile_create"
+                root.manager.transition.direction = "left"
 
+<LoginNoUsernameWindow>:
+    name: "login_no_username"
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            text: "Profile not found. Would you like to create a new profile? Or would like us to email your username?"
+
+        # create new profile button
+        Button:
+            text: "Create Profile"
+            on_release:
+                app.root.current = "profile_create"
+                root.manager.transition.direction = "left"
+
+        # email or forgot username button
+        Button:
+            text: "Forgot User Name"
+            on_release:
+                app.root.current = "login_email_username"
+                root.manager.transition.direction = "left"
+
+        # cancel button
         Button:
             text: "Cancel"
             on_release:
-                app.root.current = "splash"
+                app.root.current = "login"
+                root.manager.transition.direction = "right"
+
+<LoginEmailUsernameWindow>:
+    name: "login_email_username"
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            id: message
+            text: "Enter your email to receive an email with your user name."
+
+        GridLayout:
+            cols: 2
+
+            Label:
+                text: "Email: "
+
+            TextInput:
+                id: email
+                multiline: False
+
+        # email password reset link
+        Button:
+            id: email_button
+            text: "Email User Name"
+            on_release:
+                root.email_username(email, message, email_button, cancel_button)
+
+        # cancel button
+        Button:
+            id: cancel_button
+            text: "Cancel"
+            on_release:
+                app.root.current = "login_no_username"
+                root.manager.transition.direction = "right"
+
+<LoginEmailUsernameConfirmationWindow>:
+    name: "login_email_username_confirmation"
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            id: message
+            text: "If the email you entered is in the system, please check your email for your username reminder."
+
+
+        Button:
+            id: ok_button
+            text: "Ok"
+            on_release:
+                app.root.current = "login"
+                root.manager.transition.direction = "right"
+
+<LoginWrongPasswordWindow>:
+    name: "login_wrong_password"
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            text: "Wrong password. Would you like us to email you a password reset link?"
+        # email password reset link
+        # cancel button
+        Button:
+            text: "Cancel"
+            on_release:
+                app.root.current = "login"
                 root.manager.transition.direction = "right"
 
 
@@ -231,7 +323,7 @@ WindowManager:
         Button:
             text: "Cancel"
             on_release:
-                app.root.current = "splash"
+                app.root.current = "login"
                 root.manager.transition.direction = "right"
 
 

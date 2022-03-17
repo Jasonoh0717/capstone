@@ -29,32 +29,60 @@ class UserData:
 
     pass
 
-class SplashWindow(Screen):
-
-    pass
+# class SplashWindow(Screen):
+#
+#     pass
 
 class LoginWindow(Screen):#
     def login_released(self,usnm, passw):
         print(f"user name = {usnm.text}")
         print(f"password = {passw.text}")
-        result = db.un_login(usnm.text,passw.text)
-        if result == True:
-            global current_user
-            current_user = UserData(usnm.text)
-            # clear text fields
-            usnm.text =""
-            passw.text =""
-            #set window to profile
-            kivy_app.root.current = "profile"
-            self.manager.transition.direction = "left"
-            pass
+        userNameExists = db.un_exists(usnm.text)
+        if userNameExists == True:
+            result = db.un_login(usnm.text,passw.text)
+            if result == True:
+                global current_user
+                current_user = UserData(usnm.text)
+                # clear text fields
+                usnm.text =""
+                passw.text =""
+                #set window to profile
+                kivy_app.root.current = "profile"
+                pass
+            else:
+                kivy_app.root.current = "login_wrong_password"
         else:
             # give users feedback that they are not able to log in due to invalid credentials
+            kivy_app.root.current = "login_no_username"
             pass
+
+        self.manager.transition.direction = "left"
+
+        pass
 
         pass
 
     pass
+
+class LoginNoUsernameWindow(Screen):
+    pass
+
+class LoginEmailUsernameWindow(Screen):
+    def email_username(self, email, message, email_button, cancel_button):
+        kivy_app.root.current = "login_email_username_confirmation"
+        self.manager.transition.direction = "left"
+
+        pass
+    pass
+class LoginEmailUsernameConfirmationWindow(Screen):
+    pass
+
+class LoginWrongPasswordWindow(Screen):
+    pass
+class LoginResetPasswordWindow(Screen):
+    pass
+
+
 
 class ProfileWindow(Screen):
     def display_userdata(self,usnm,first_name,last_name,email,interests):
