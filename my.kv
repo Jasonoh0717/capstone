@@ -7,10 +7,15 @@ WindowManager:
     LoginEmailUsernameConfirmationWindow:
     LoginWrongPasswordWindow:
     LoginResetPasswordWindow:
+    LoginResetPasswordConfirmationWindow:
     ProfileWindow:
     ProfileCreateWindow:
 
+<GridLayout>:
+    padding: 100
+    spacing: 30
 
+<Button>:
 
 <LoginWindow>:
     name: "login"
@@ -18,8 +23,17 @@ WindowManager:
     GridLayout:
         cols:1
 
+        Image:
+            source: "Logo.jpg"
+            size: self.texture_size # make images bigger
+            font_size:11
+            bold:True
+
+
+
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Username: "
@@ -30,6 +44,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Password: "
@@ -101,6 +116,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Email: "
@@ -153,6 +169,12 @@ WindowManager:
         Label:
             text: "Wrong password. Would you like us to email you a password reset link?"
         # email password reset link
+        Button:
+            text: "Email Reset Link"
+            on_release:
+                app.root.current = "login_email_reset_password"
+                root.manager.transition.direction = "left"
+
         # cancel button
         Button:
             text: "Cancel"
@@ -160,6 +182,62 @@ WindowManager:
                 app.root.current = "login"
                 root.manager.transition.direction = "right"
 
+<LoginResetPasswordWindow>:
+    name: "login_email_reset_password"
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            id: message
+            text: "Enter your email to receive an email with your password reset link."
+
+        GridLayout:
+            cols: 2
+            padding: 0
+
+            Label:
+                text: "Email: "
+
+            TextInput:
+                id: email
+                multiline: False
+
+        # email password reset link
+        Button:
+            id: email_button
+            text: "Email Password Reset"
+            on_release:
+                root.email_password_reset(email, message, email_button, cancel_button)
+
+        # cancel button
+        Button:
+            id: cancel_button
+            text: "Cancel"
+            on_release:
+                app.root.current = "login_wrong_password"
+                root.manager.transition.direction = "right"
+
+
+
+
+<LoginResetPasswordConfirmationWindow>:
+    name: "login_reset_password_confirmation"
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            id: message
+            text: "If the email you entered is in the system, please check your email for your password reset link"
+        Button:
+            id: ok_button
+            text: "Ok"
+            on_release:
+                app.root.current = "login"
+                root.manager.transition.direction = "right"
 
 
 
@@ -169,6 +247,7 @@ WindowManager:
 
     GridLayout:
         cols:1
+        spacing: 10
 
         Label:
             text: "HELLO Welcome to your profile!"
@@ -177,6 +256,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Username: "
@@ -190,6 +270,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "First name: "
@@ -200,6 +281,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Lastname: "
@@ -210,6 +292,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Email: "
@@ -219,6 +302,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Interests: "
@@ -239,6 +323,7 @@ WindowManager:
 
     GridLayout:
         cols:1
+        spacing: 10
 
         Label:
             text: "Enter your information to create a profile!"
@@ -246,6 +331,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Username: "
@@ -256,6 +342,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Password: "
@@ -267,6 +354,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "First name: "
@@ -277,6 +365,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Lastname: "
@@ -288,6 +377,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Email: "
@@ -298,6 +388,7 @@ WindowManager:
 
         GridLayout:
             cols: 2
+            padding: 0
 
             Label:
                 text: "Interests: "
