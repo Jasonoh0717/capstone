@@ -80,7 +80,15 @@ class LoginEmailUsernameConfirmationWindow(Screen):
 class LoginWrongPasswordWindow(Screen):
     pass
 class LoginResetPasswordWindow(Screen):
+    def email_password_reset(self,email, message, email_button, cancel_button):
+        kivy_app.root.current = "login_reset_password_confirmation"
+        self.manager.transition.direction = "left"
+
+        pass
     pass
+class LoginResetPasswordConfirmationWindow(Screen):
+    pass
+
 
 
 
