@@ -1,5 +1,6 @@
 #:kivy 2.0
 #:import Clock kivy.clock.Clock
+#:import utils kivy.utils
 WindowManager:
     LoginWindow:
     LoginNoUsernameWindow:
@@ -19,26 +20,32 @@ WindowManager:
 
 <TextInput>:
     padding: 2,1,2,1
+<Label>:
+    color: 0,0,1,1
+
 
 <Button>:
-    background_color: 0,0,1,1
+    background_color: 0,0,0.5,1
+    color: 1,1,1,1
  #   background_normal: 'normal.png'
  #   background_down: 'down.png'
  #   border: 30 ,30,30 ,30
 
+
 <LoginWindow>:
     name: "login"
-    canvas.before:
     # use below code for every window
+    canvas.before:
         Color:
-            rgba: 0, 1, 1, 1
+            rgb: utils.get_color_from_hex('#85C1E9')
+            # light blue color
         Rectangle:
             pos: self.pos
             size: self.size
 
     GridLayout:
         cols:1
-        padding: 0
+        padding: 0,50,0,0
 
         Image:
             source: "Logo2.jpg"
@@ -92,6 +99,14 @@ WindowManager:
 
 <LoginNoUsernameWindow>:
     name: "login_no_username"
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#E9BF85')
+            # light orange color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 
     GridLayout:
         cols:1
@@ -123,6 +138,12 @@ WindowManager:
 
 <LoginEmailUsernameWindow>:
     name: "login_email_username"
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#E9BF85')
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -160,6 +181,13 @@ WindowManager:
 
 <LoginEmailUsernameConfirmationWindow>:
     name: "login_email_username_confirmation"
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#C8E985')
+            # light green color
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -179,6 +207,13 @@ WindowManager:
 
 <LoginWrongPasswordWindow>:
     name: "login_wrong_password"
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#E9BF85')
+            # light orange color
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -202,6 +237,13 @@ WindowManager:
 
 <LoginResetPasswordWindow>:
     name: "login_email_reset_password"
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#E9BF85')
+            # light orange color
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -242,6 +284,12 @@ WindowManager:
 
 <LoginResetPasswordConfirmationWindow>:
     name: "login_reset_password_confirmation"
+    canvas.before:
+        Color:
+            rgba: 0, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -262,6 +310,12 @@ WindowManager:
 <ProfileWindow>:
     name: "profile"
     on_enter: root.display_userdata(usnm,first_name,last_name, zip_code,date_of_birth,email,interests)
+    canvas.before:
+        Color:
+            rgba: 0, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -360,6 +414,12 @@ WindowManager:
 
 <ProfileCreateWindow>:
     name: "profile_create"
+    canvas.before:
+        Color:
+            rgba: 0, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
@@ -494,6 +554,12 @@ WindowManager:
     name: "profile_username_already_in_use"
     message: message
     on_enter: root.update_message()
+    canvas.before:
+        Color:
+            rgba: 0, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 
     GridLayout:
