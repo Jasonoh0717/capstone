@@ -1,3 +1,9 @@
+import kivy
+kivy.require('1.9.0')
+
+from kivy.config import Config
+Config.set('graphics', 'width', '375')
+Config.set('graphics', 'height', '667')
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -9,11 +15,25 @@ global kivy_app
 kivy_app = object()
 
 
+def check_email(email):
+    import re
+    regex = '^[a-z0-9\._]+[@]\w+[.]\w{2,3}$' # regular expression pattern to check email validation
+
+    if(re.search(regex,email)):
+        print("Valid Email")
+        return True
+    else:
+        print("Invalid Email")
+        return  False
+
+
 class UserData:
     def __init__(self,un =""):
         self.UserName=un
         self.FirstName=""
         self.LastName=""
+        self.ZipCode=""
+        self.DateOfBirth=""
         self.Email=""
         self.Interests=""
         pass
@@ -22,8 +42,10 @@ class UserData:
         self.UserName = data[1]
         self.FirstName= data[3]
         self.LastName= data[4]
-        self.Email= data[5]
-        self.Interests= data[6]
+        self.ZipCode= data[5]
+        self.DateOfBirth= data[6]
+        self.Email= data[7]
+        self.Interests= data[8]
         pass
 
 
@@ -93,7 +115,7 @@ class LoginResetPasswordConfirmationWindow(Screen):
 
 
 class ProfileWindow(Screen):
-    def display_userdata(self,usnm,first_name,last_name,email,interests):
+    def display_userdata(self,usnm,first_name,last_name,zip_code,date_of_birth,email,interests):
         user_profiles = db.profile_get(current_user.UserName)
         assert len(user_profiles) > 0
 
@@ -103,6 +125,8 @@ class ProfileWindow(Screen):
         usnm.text = current_user.UserName
         first_name.text = current_user.FirstName
         last_name.text = current_user.LastName
+        zip_code.text = current_user.ZipCode
+        date_of_birth.text = current_user.DateOfBirth
         email.text = current_user.Email
         interests.text = current_user.Interests
 
@@ -113,19 +137,63 @@ class ProfileWindow(Screen):
     pass
 
 class ProfileCreateWindow(Screen):
-    def create_profile_released(self,usnm,passw,first_name,last_name,email,interests):
-        db.profile_new(usnm.text,passw.text,first_name.text,last_name.text,email.text,interests.text)
-        global current_user
-        current_user.UserName = usnm.text
-        current_user.FirstName = first_name.text
-        current_user.LastName = last_name.text
-        current_user.Email = email.text
-        current_user.Interests = interests.text
+    def create_profile_released(self,usnm,passw,passw2,first_name,last_name,zip_code,date_of_birth,email,interests):
+        all_required_info = True
+        required_fields = [usnm,passw,passw2,first_name,last_name,zip_code,date_of_birth,email]
+        for field in required_fields:
+            if field.text == "":
+                all_required_info = False
+                field.background_color = [1, 0.5, 0.5, 1]
+            else:
+                field.background_color = [1, 1, 1, 1]
+                pass
 
+        if passw2.text != passw.text:
+            all_required_info = False
+            passw2.background_color = [1, 0.5, 0.5, 1]
+
+        # if not check_email(email.text):
+        #     all_required_info = False
+        #     email.background_color = [1, 0.5, 0.5, 1]
+
+        if not all_required_info:
+            return
+
+        global current_user
+
+        user_name_already_in_use = db.un_exists(usnm.text)
+        if user_name_already_in_use:
+            usnm.background_color = [1, 0.5, 0.5, 1]
+            current_user = UserData(usnm.text)
+            kivy_app.root.current = "profile_username_already_in_use"
+            self.manager.transition.direction = "left"
+        else:
+
+            db.profile_new(usnm.text,passw.text,first_name.text,last_name.text,zip_code.text, date_of_birth.text,email.text,interests.text)
+            current_user.UserName = usnm.text
+            current_user.FirstName = first_name.text
+            current_user.LastName = last_name.text
+            current_user.ZipCode = zip_code.text
+            current_user.DateOfBirth = date_of_birth.text
+            current_user.Email = email.text
+            current_user.Interests = interests.text
+
+            kivy_app.root.current = "profile"
+            self.manager.transition.direction = "left"
+
+        pass
 
     pass
 
+class ProfileUserNameAlreadyInUseWindow(Screen):
+    message_base = None
 
+
+    def update_message(self):
+        if self.message_base == None:
+            self.message_base = self.message.text
+        self.message.text = current_user.UserName + self.message_base
+        pass
     pass
 
 class WindowManager(ScreenManager):

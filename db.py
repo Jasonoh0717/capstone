@@ -8,7 +8,7 @@ T_NAME = 'users'
 # database handling
 # ---------------------
 import sqlite3
-# reference tutorial: https://www.youtube.com/watch?v=byHcYRpMgI4
+# reference tutorial, watch to create database: https://www.youtube.com/watch?v=byHcYRpMgI4
 def init(db_name = DB_NAME, table_name = T_NAME):
     # connect to database
     # database file is created if it doesn't exist
@@ -24,6 +24,8 @@ def init(db_name = DB_NAME, table_name = T_NAME):
             pw text,
             first_name text,
             last_name text,
+            zip_code text,
+            date_of_birth text,
             email text,
             interests text
         )
@@ -58,7 +60,9 @@ def profile_new(
     un, 
     pw, 
     fn, 
-    ln, 
+    ln,
+    zip,
+    dob,
     em, 
     ints,
     db_name = DB_NAME
@@ -71,12 +75,14 @@ def profile_new(
         c.execute("""INSERT INTO users VALUES (
                 ?, 
                 ?, 
+                ?,
+                ?,
                 ?, 
                 ?, 
                 ?, 
                 ?
             )
-        """, (un, pw, fn, ln, em, ints,))
+        """, (un, pw, fn, ln, zip, dob, em, ints,))
         conn.commit()
         result = True
         print(f'Created new profile for "{un}".')
@@ -104,7 +110,7 @@ def profile_get(*args, **kwargs):
     
     # print(f'uns = {uns}')
 
-    # handle default kwargs
+    # handle default kwargs it meant to allowed keywords arguments into function
     if 'db_name' not in kwargs.keys():
         db_name = DB_NAME
         pass

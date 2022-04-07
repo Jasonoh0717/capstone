@@ -10,67 +10,85 @@ WindowManager:
     LoginResetPasswordConfirmationWindow:
     ProfileWindow:
     ProfileCreateWindow:
+    ProfileUserNameAlreadyInUseWindow:
+
 
 <GridLayout>:
-    padding: 100
-    spacing: 30
+    padding: 50
+    spacing: 20
+
+<TextInput>:
+    padding: 2,1,2,1
 
 <Button>:
+    background_color: 0,0,1,1
+ #   background_normal: 'normal.png'
+ #   background_down: 'down.png'
+ #   border: 30 ,30,30 ,30
 
 <LoginWindow>:
     name: "login"
+    canvas.before:
+    # use below code for every window
+        Color:
+            rgba: 0, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     GridLayout:
         cols:1
+        padding: 0
 
         Image:
-            source: "Logo.jpg"
+            source: "Logo2.jpg"
             size: self.texture_size # make images bigger
-            font_size:11
+            font_size:25
             bold:True
 
-
-
         GridLayout:
-            cols: 2
-            padding: 0
+            cols: 1
 
-            Label:
-                text: "Username: "
+            GridLayout:
+                cols: 2
+                padding: 0
 
-            TextInput:
-                id: usnm
-                multiline: False
+                Label:
+                    text: "Username: "
 
-        GridLayout:
-            cols: 2
-            padding: 0
+                TextInput:
+                    id: usnm
+                    multiline: False
 
-            Label:
-                text: "Password: "
+            GridLayout:
+                cols: 2
+                padding: 0
 
-            TextInput:
-                id: passw
-                multiline: False
-                password: True
+                Label:
+                    text: "Password: "
 
-        Button:
-            text: "Login"
-            on_release:
-                root.login_released(usnm, passw)
+                TextInput:
+                    id: passw
+                    multiline: False
+                    password: True
 
-
-        Button:
-            text: "Clear"
-            on_release:
-                root.manager.clear_released(usnm,passw)
+            Button:
+                text: "Login"
+                on_release:
+                    root.login_released(usnm, passw)
 
 
-        Button:
-            text: "Create Profile"
-            on_release:
-                app.root.current = "profile_create"
-                root.manager.transition.direction = "left"
+            Button:
+                text: "Clear"
+                on_release:
+                    root.manager.clear_released(usnm,passw)
+
+
+            Button:
+                text: "Create Profile"
+                on_release:
+                    app.root.current = "profile_create"
+                    root.manager.transition.direction = "left"
 
 <LoginNoUsernameWindow>:
     name: "login_no_username"
@@ -243,7 +261,7 @@ WindowManager:
 
 <ProfileWindow>:
     name: "profile"
-    on_enter: root.display_userdata(usnm,first_name,last_name,email,interests)
+    on_enter: root.display_userdata(usnm,first_name,last_name, zip_code,date_of_birth,email,interests)
 
     GridLayout:
         cols:1
@@ -295,6 +313,28 @@ WindowManager:
             padding: 0
 
             Label:
+                text: "Zip Code: "
+
+            Label:
+                id: zip_code
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            padding: 0
+
+            Label:
+                text: "Date of Birth: "
+
+            Label:
+                id: date_of_birth
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            padding: 0
+
+            Label:
                 text: "Email: "
 
             Label:
@@ -326,7 +366,7 @@ WindowManager:
         spacing: 10
 
         Label:
-            text: "Enter your information to create a profile!"
+            text: "Enter your information to create a profile! (* Required fields)"
 
 
         GridLayout:
@@ -334,7 +374,7 @@ WindowManager:
             padding: 0
 
             Label:
-                text: "Username: "
+                text: "Username*: "
 
             TextInput:
                 id: usnm
@@ -345,10 +385,23 @@ WindowManager:
             padding: 0
 
             Label:
-                text: "Password: "
+                text: "Password*: "
 
             TextInput:
                 id: passw
+                multiline: False
+                password: True
+
+
+        GridLayout:
+            cols: 2
+            padding: 0
+
+            Label:
+                text: "Confirm Password*: "
+
+            TextInput:
+                id: passw2
                 multiline: False
                 password: True
 
@@ -357,7 +410,7 @@ WindowManager:
             padding: 0
 
             Label:
-                text: "First name: "
+                text: "First Name*: "
 
             TextInput:
                 id: first_name
@@ -368,19 +421,40 @@ WindowManager:
             padding: 0
 
             Label:
-                text: "Lastname: "
+                text: "Last Name*: "
 
             TextInput:
                 id: last_name
                 multiline: False
-
 
         GridLayout:
             cols: 2
             padding: 0
 
             Label:
-                text: "Email: "
+                text: "Zip Code*: "
+
+            TextInput:
+                id: zip_code
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            padding: 0
+
+            Label:
+                text: "Date of Birth*: "
+
+            TextInput:
+                id: date_of_birth
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            padding: 0
+
+            Label:
+                text: "Email*: "
 
             TextInput:
                 id: email
@@ -401,14 +475,12 @@ WindowManager:
         Button:
             text: "Create Profile"
             on_release:
-                root.create_profile_released(usnm,passw,first_name,last_name,email,interests)
-                app.root.current = "profile"
-                root.manager.transition.direction = "left"
+                root.create_profile_released(usnm,passw,passw2,first_name,last_name,zip_code,date_of_birth,email,interests)
 
         Button:
             text: "Clear"
             on_release:
-                root.manager.clear_released(usnm,passw,first_name,last_name,email,interests)
+                root.manager.clear_released(usnm,passw,passw2,first_name,last_name,zip_code,date_of_birth,email,interests)
 
 
         Button:
@@ -418,3 +490,22 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
 
+<ProfileUserNameAlreadyInUseWindow>:
+    name: "profile_username_already_in_use"
+    message: message
+    on_enter: root.update_message()
+
+
+    GridLayout:
+        cols:1
+
+        # message
+        Label:
+            id: message
+            text: " user name already in use. Please select another user name."
+        Button:
+            id: ok_button
+            text: "Ok"
+            on_release:
+                app.root.current = "profile_create"
+                root.manager.transition.direction = "right"
