@@ -5,7 +5,9 @@ from kivy.config import Config
 Config.set('graphics', 'width', '375')
 Config.set('graphics', 'height', '667')
 from kivy.app import App
+from kivymd.app import MDApp
 from kivy.lang import Builder
+from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
 import db
 
@@ -51,9 +53,6 @@ class UserData:
 
     pass
 
-# class SplashWindow(Screen):
-#
-#     pass
 
 class LoginWindow(Screen):#
     def login_released(self,usnm, passw):
@@ -112,7 +111,8 @@ class LoginResetPasswordConfirmationWindow(Screen):
     pass
 
 
-
+class ProfileView(Widget):
+    pass
 
 class ProfileWindow(Screen):
     def display_userdata(self,usnm,first_name,last_name,zip_code,date_of_birth,email,interests):
@@ -222,43 +222,16 @@ class WindowManager(ScreenManager):
 
 current_user = UserData()
 
-kv = Builder.load_file("my.kv")
 
 
-class MyMainApp(App):
+class MyMainApp(MDApp):
     def build(self):
-        return kv
+        return Builder.load_file("my.kv")
+
+
 
 def main():
-    # # Teo: use these lines to manipulate database
-    # Database initialization and tests
     db.init()
-    # db.un_exists('userNameThatDoesNotExist')
-    # db.profile_delete('userNameThatDoesNotExist')
-    # db.profile_delete('davidDelSol')
-    # db.profile_new(
-    #     'davidDelSol',
-    #     'encrypted?',
-    #     'david',
-    #     'aloka',
-    #     'test@preform.io',
-    #     'salsa,extended intelligence,marathon running in a full suit'
-    # )
-    # db.profile_new(
-    #     'Python733t',
-    #     'encrypted?',
-    #     'Doroteo ',
-    #     'Bonilla',
-    #     'doabonilla@yahoo.com',
-    #     'work,school,sleep,repeat'
-    # )
-    # db.un_login('davidDelSol', 'encrypted?')
-    # db.profile_update('davidDelSol', pw = 'definitelyNotEncripted!')
-    # db.un_login('davidDelSol', 'definitelyNotEncripted!')
-    # db.un_exists('davidDelSol')
-    # db.profile_print(all = True)
-    # db.profile_print(['Python733t'])
-    # db.profile_print('Python733t')
     pass
 
 
