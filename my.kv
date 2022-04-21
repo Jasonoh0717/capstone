@@ -39,7 +39,7 @@ WindowManager:
     # use below code for every window
     canvas.before:
         Color:
-            rgb: utils.get_color_from_hex('#85C1E9')
+            rgb: utils.get_color_from_hex('#498A97')
             # light blue color
         Rectangle:
             pos: self.pos
@@ -309,9 +309,11 @@ WindowManager:
 
 
 
+
+
 <ProfileWindow>:
     name: "profile"
-    on_enter: root.display_userdata(usnm,first_name,last_name, zip_code,date_of_birth,email,interests)
+    on_enter: root.display_userdata(usnm, first_name, last_name, zip_code, date_of_birth, email, interests)
     canvas.before:
         Color:
             rgba: 0, 1, 1, 1
@@ -324,7 +326,7 @@ WindowManager:
         orientation: 'vertical'
 
         MDToolbar:
-            title: "Bottom Navbar"
+            title: "Welcome to Hello App."
             md_bg_color: .2,.2,.2,1
             specific_text_color: 1,1,1,1
 
@@ -333,125 +335,148 @@ WindowManager:
             #panel_color: 0,0,1,1
 
             MDBottomNavigationItem:
-                name: 'profile view'
-                text: "Profile View"
+                name: 'profile'
+              #  text: "Profile"
+                icon: "account"
 
-                ProfileView:
+                GridLayout:
+                    cols:1
+                    spacing: 10
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "Username: "
+
+                        Label:
+                            id: usnm
+                            text: ""
+
+
+
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "First name: "
+
+                        Label:
+                            id: first_name
+
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "Lastname: "
+
+                        Label:
+                            id: last_name
+
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "Zip Code: "
+
+                        Label:
+                            id: zip_code
+                            multiline: False
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "Date of Birth: "
+
+                        Label:
+                            id: date_of_birth
+                            multiline: False
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "Email: "
+
+                        Label:
+                            id: email
+
+                    GridLayout:
+                        cols: 2
+                        padding: 0
+
+                        Label:
+                            text: "Interests: "
+
+                        Label:
+                            id: interests
+
+
+                    Button:
+                        text: "Log out"
+                        on_release:
+                            app.root.current = "login"
+                            root.manager.transition.direction = "right"
+
 
 
             MDBottomNavigationItem:
-                name: 'screen 2'
-                text: "Youtube"
-                icon: 'youtube'
+                name: 'interests'
+              #  text: "Interests"
+                icon: 'soccer'
 
                 MDLabel:
-                    text: "Codemy YouTube Channel Rocks!"
+                    text: "Select your favorite sports."
+                    halign: 'center'
+
+
+
+            MDBottomNavigationItem:
+                name: 'calendar'
+               # text: "Calendar"
+                icon: 'calendar'
+
+                MDLabel:
+                    text: "Schedule events with your sports buddies."
+                    halign: 'center'
+
+            MDBottomNavigationItem:
+                name: 'contacts'
+                #text: "Contacts"
+                icon: 'contacts'
+
+                MDLabel:
+                    text: "List of your sports buddies."
+                    halign: 'center'
+
+            MDBottomNavigationItem:
+                name: 'chat'
+              #  text: "Chat"
+                icon: 'chat'
+
+                MDLabel:
+                    text: "Send messages to your sports buddies."
                     halign: 'center'
 
 
             MDBottomNavigationItem:
-                name: 'screen 3'
-                text: "Instagram"
-                icon: 'instagram'
+                name: 'about'
+               # text: "About"
+                icon: 'settings-helper'
 
                 MDLabel:
-                    text: "My Instagram:\nrealjohnelder"
+                    text: "About Hello App, and Rate App option."
                     halign: 'center'
-
-<ProfileView>:
-    GridLayout:
-        cols:1
-        spacing: 10
-
-        Label:
-            text: "HELLO Welcome to your profile!"
-
-
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "Username: "
-
-            Label:
-                id: usnm
-                text: ""
-
-
-
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "First name: "
-
-            Label:
-                id: first_name
-
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "Lastname: "
-
-            Label:
-                id: last_name
-
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "Zip Code: "
-
-            Label:
-                id: zip_code
-                multiline: False
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "Date of Birth: "
-
-            Label:
-                id: date_of_birth
-                multiline: False
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "Email: "
-
-            Label:
-                id: email
-
-        GridLayout:
-            cols: 2
-            padding: 0
-
-            Label:
-                text: "Interests: "
-
-            Label:
-                id: interests
-
-
-        Button:
-            text: "Log out"
-            on_release:
-                app.root.current = "login"
-                root.manager.transition.direction = "right"
 
 
 <ProfileCreateWindow>:

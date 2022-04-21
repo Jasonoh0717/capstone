@@ -2,7 +2,7 @@ import kivy
 kivy.require('1.9.0')
 
 from kivy.config import Config
-Config.set('graphics', 'width', '375')
+Config.set('graphics', 'width', '375')#configure a file
 Config.set('graphics', 'height', '667')
 from kivy.app import App
 from kivymd.app import MDApp
@@ -100,6 +100,7 @@ class LoginEmailUsernameConfirmationWindow(Screen):
 
 class LoginWrongPasswordWindow(Screen):
     pass
+
 class LoginResetPasswordWindow(Screen):
     def email_password_reset(self,email, message, email_button, cancel_button):
         kivy_app.root.current = "login_reset_password_confirmation"
@@ -131,10 +132,10 @@ class ProfileWindow(Screen):
         interests.text = current_user.Interests
 
 
-
-
         pass
+
     pass
+
 
 class ProfileCreateWindow(Screen):
     def create_profile_released(self,usnm,passw,passw2,first_name,last_name,zip_code,date_of_birth,email,interests):
