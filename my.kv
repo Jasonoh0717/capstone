@@ -29,7 +29,6 @@ WindowManager:
 <Button>:
     background_color: 0,0,0.5,1
     color: 1,1,1,1
-    size: 500, 25
  #   background_normal: 'normal.png'
  #   background_down: 'down.png'
  #   border: 30 ,30,30 ,30
@@ -40,7 +39,7 @@ WindowManager:
     # use below code for every window
     canvas.before:
         Color:
-            rgb: utils.get_color_from_hex('#498A97')
+            rgb: utils.get_color_from_hex('#9CCF7B')
             # light blue color
         Rectangle:
             pos: self.pos
@@ -48,24 +47,22 @@ WindowManager:
 
     GridLayout:
         cols:1
-        padding: 0,50,0,0
+        padding: 0,20,0,0
 
         Image:
-            source: "Logo.jpg"
+            source: "Logo1.jpg"
             size: self.texture_size # make images bigger
             font_size:25
             bold:True
 
         GridLayout:
             cols: 1
-            padding: 50, 0, 50,50
 
             GridLayout:
                 cols: 2
                 padding: 0
 
                 Label:
-                    color: 1,1,1,1
                     text: "Username: "
 
                 TextInput:
@@ -77,7 +74,6 @@ WindowManager:
                 padding: 0
 
                 Label:
-                    color: 1,1,1,1
                     text: "Password: "
 
                 TextInput:
@@ -107,7 +103,7 @@ WindowManager:
     name: "login_no_username"
     canvas.before:
         Color:
-            rgb: utils.get_color_from_hex('#E9BF85')
+            rgb: utils.get_color_from_hex('#9CCF7B')
             # light orange color
         Rectangle:
             pos: self.pos
@@ -117,14 +113,10 @@ WindowManager:
     GridLayout:
         cols:1
 
-        FloatLayout:
-
         # message
         Label:
-            size_hint: 0.3, 1
-            text: "Profile not found. Would you like to \ncreate a new profile? Or would like us to \nemail your username?"
+            text: "Profile not found. Please Create Profile or click Find Username"
 
-        FloatLayout:
 
         # create new profile button
         Button:
@@ -147,13 +139,11 @@ WindowManager:
                 app.root.current = "login"
                 root.manager.transition.direction = "right"
 
-        FloatLayout:
-
 <LoginEmailUsernameWindow>:
     name: "login_email_username"
     canvas.before:
         Color:
-            rgb: utils.get_color_from_hex('#E9BF85')
+            rgb: utils.get_color_from_hex('#9CCF7B')
         Rectangle:
             pos: self.pos
             size: self.size
@@ -161,18 +151,13 @@ WindowManager:
     GridLayout:
         cols:1
 
-        FloatLayout:
-
-
         # message
         Label:
             id: message
-            text: "Enter your email to receive \nan email with your user name."
-        FloatLayout:
-
+            text: "Enter your email to receive an email with your user name."
 
         GridLayout:
-            cols: 1
+            cols: 2
             padding: 0
 
             Label:
@@ -197,14 +182,11 @@ WindowManager:
                 app.root.current = "login_no_username"
                 root.manager.transition.direction = "right"
 
-        FloatLayout:
-
-
 <LoginEmailUsernameConfirmationWindow>:
     name: "login_email_username_confirmation"
     canvas.before:
         Color:
-            rgb: utils.get_color_from_hex('#C8E985')
+            rgb: utils.get_color_from_hex('#9CCF7B')
             # light green color
         Rectangle:
             pos: self.pos
@@ -212,17 +194,11 @@ WindowManager:
 
     GridLayout:
         cols:1
-        FloatLayout:
-        FloatLayout:
-
 
         # message
         Label:
             id: message
-            text: "If the email you entered is in the \nsystem, please check your email for \nyour username reminder."
-
-        FloatLayout:
-
+            text: "If the email you entered is in the system, please check your email for your username reminder."
 
 
         Button:
@@ -231,10 +207,6 @@ WindowManager:
             on_release:
                 app.root.current = "login"
                 root.manager.transition.direction = "right"
-
-        FloatLayout:
-        FloatLayout:
-
 
 <LoginWrongPasswordWindow>:
     name: "login_wrong_password"
@@ -249,15 +221,9 @@ WindowManager:
     GridLayout:
         cols:1
 
-        FloatLayout:
-
-
         # message
         Label:
-            text: "Wrong password. Would you like us to \nemail you a password reset link?"
-
-        FloatLayout:
-
+            text: "Wrong password. Would you like us to email you a password reset link?"
         # email password reset link
         Button:
             text: "Email Reset Link"
@@ -272,14 +238,11 @@ WindowManager:
                 app.root.current = "login"
                 root.manager.transition.direction = "right"
 
-        FloatLayout:
-
-
 <LoginResetPasswordWindow>:
     name: "login_email_reset_password"
     canvas.before:
         Color:
-            rgb: utils.get_color_from_hex('#E9BF85')
+            rgb: utils.get_color_from_hex('#9CCF7B')
             # light orange color
         Rectangle:
             pos: self.pos
@@ -288,18 +251,13 @@ WindowManager:
     GridLayout:
         cols:1
 
-        FloatLayout:
-
         # message
         Label:
             id: message
-            text: "Enter your email to receive an \nemail with your password reset link."
-
-        FloatLayout:
-
+            text: "Enter your email to receive an email with your password reset link."
 
         GridLayout:
-            cols: 1
+            cols: 2
             padding: 0
 
             Label:
@@ -323,9 +281,6 @@ WindowManager:
             on_release:
                 app.root.current = "login_wrong_password"
                 root.manager.transition.direction = "right"
-
-        FloatLayout:
-
 
 
 
@@ -360,20 +315,25 @@ WindowManager:
 <ProfileWindow>:
     name: "profile"
     on_enter: root.display_userdata(usnm, first_name, last_name, zip_code, date_of_birth, email, interests)
+    canvas.before:
+        Color:
+            rgba: 0, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     BoxLayout:
-
 
         orientation: 'vertical'
 
         MDToolbar:
-            title: "Welcome to Ever App."
+            title: "Welcome to Ever."
             md_bg_color: .2,.2,.2,1
             specific_text_color: 1,1,1,1
 
         MDBottomNavigation:
             #color stuff
-            #panel_color: 0,0.5,0.5,1
+            #panel_color: 0,0,1,1
 
             MDBottomNavigationItem:
                 name: 'profile'
@@ -381,13 +341,6 @@ WindowManager:
                 icon: "account"
 
                 GridLayout:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
                     cols:1
                     spacing: 10
 
@@ -484,13 +437,6 @@ WindowManager:
                 icon: 'soccer'
 
                 MDLabel:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
                     text: "Select your favorite sports."
                     halign: 'center'
 
@@ -502,13 +448,6 @@ WindowManager:
                 icon: 'calendar'
 
                 MDLabel:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
                     text: "Schedule events with your sports buddies."
                     halign: 'center'
 
@@ -518,13 +457,6 @@ WindowManager:
                 icon: 'contacts'
 
                 MDLabel:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
                     text: "List of your sports buddies."
                     halign: 'center'
 
@@ -534,31 +466,7 @@ WindowManager:
                 icon: 'chat'
 
                 MDLabel:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
                     text: "Send messages to your sports buddies."
-                    halign: 'center'
-
-
-            MDBottomNavigationItem:
-                name: 'news'
-              #  text: "News"
-                icon: 'newspaper-variant-multiple'
-
-                MDLabel:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
-                    text: "Fitness news feed."
                     halign: 'center'
 
 
@@ -568,14 +476,7 @@ WindowManager:
                 icon: 'settings-helper'
 
                 MDLabel:
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 1, 1, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
-                    text: "About Ever App, and Rate App option."
+                    text: "About Hello App, and Rate App option."
                     halign: 'center'
 
 
@@ -593,8 +494,7 @@ WindowManager:
         spacing: 10
 
         Label:
-          #  text_size: self.size
-            text: "Enter your information to create \na profile! (* Required fields)"
+            text: "Enter your information to create a profile! (* Required fields)"
 
 
         GridLayout:
